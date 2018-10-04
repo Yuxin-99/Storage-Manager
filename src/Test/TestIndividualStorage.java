@@ -3,6 +3,7 @@ package Test;
 import Model.individualStorage;
 import Model.Item;
 
+import Model.unlimitedUse;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -25,7 +26,7 @@ public class TestIndividualStorage {
         //assume the box is empty at first
         assertFalse(box.Items.size() == 1);
 
-        Item newItem = new Item("book");
+        Item newItem = new unlimitedUse("book");
         box.Items.add(newItem);
         assertTrue(box.Items.size() == 1);
         assertEquals(box.Items.get(0), newItem);
@@ -44,8 +45,8 @@ public class TestIndividualStorage {
         box.storeItem("cup");
         box.storeItem("toys");
 
-        Item item5 = new Item("crackers");
-        Item item6 = new Item("chips");
+        Item item5 = new unlimitedUse("crackers");
+        Item item6 = new unlimitedUse("chips");
         //Add another item, and this should be added successfully
         box.addItem(item5);
         assertTrue(box.verifyStore(item5));

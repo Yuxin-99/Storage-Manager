@@ -14,8 +14,8 @@ public class Storage {
         availableStorage = new ArrayList<>();
     }
 
+    //EFFECTS: show all storage available
     public void displayStorage(){
-        System.out.println("You choose to " + "display the whole storage.");
         for (individualStorage s : availableStorage) {
             System.out.println("Storage" + availableStorage.indexOf(s) + " " + "[" + s.name + "]");
             s.display();
@@ -34,7 +34,6 @@ public class Storage {
     //EFFECTS: verify a new storage is added to the availableStorage or not
     public boolean verifyAddedStorage(individualStorage inSt){
         if (this.availableStorage.contains(inSt)){
-            System.out.println("The new storage is added successfully!");
             return true;
         }
         else {
@@ -43,7 +42,6 @@ public class Storage {
     }
 
     public void StorageToStore(){
-        System.out.println("You choose to " + "add an item.");
         String chooseIndividual = "";
         System.out.println("Where would you like to store this item?");
         chooseIndividual = scanner.nextLine();
@@ -63,8 +61,9 @@ public class Storage {
         }
     }
 
+    //MODIFIES: individualStorage
+    //EFFECTS: move an item from one individual storage to another
     public void move(){
-        System.out.println("You choose to move an item to a new place.");
         System.out.println("Where is the place this item is at now?");
         String originPlace = scanner.nextLine();
         boolean flag = false;
@@ -72,7 +71,7 @@ public class Storage {
             if (s.name.equals(originPlace)){
                 System.out.println("Please enter the name of the item you would like to remove.");
                 String itName = scanner.nextLine();
-                Item it = new Item(itName);
+                Item it = new unlimitedUse(itName);
                 s.removeItem(it);
                 flag = true;
                 System.out.println("Which place would you like to move this item to?");

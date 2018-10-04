@@ -19,6 +19,7 @@ public class individualStorage {
         maxCapacity = maximum;
     }
 
+    //EFFECTS: show all items in this individual storage
     public void display(){
         String res = "";
         for (Item item : Items) {
@@ -32,7 +33,7 @@ public class individualStorage {
     //EFFECTS: add an Item into the Items of this individualStorage
     public void storeItem(String nm){
         if ((Items.size() + 1) <= maxCapacity){
-            Item newItem = new Item(nm);
+            Item newItem = new unlimitedUse(nm);
             Items.add(newItem);
             verifyStore(newItem);
         }
@@ -44,7 +45,6 @@ public class individualStorage {
     //EFFECTS: verify an item is added to the list of items of this storage or not
     public boolean verifyStore(Item i){
         if (this.Items.contains(i)){
-            System.out.println("Store this item successfully!");
             return true;
         }
         else {
@@ -52,6 +52,8 @@ public class individualStorage {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: add an item which is moved from another individual storage
     public void addItem(Item i){
         if ((Items.size() + 1) <= maxCapacity) {
             Items.add(i);
