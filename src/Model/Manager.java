@@ -1,28 +1,39 @@
 package Model;
 
-import Model.individualStorage;
-import Model.Item;
+import Exceptions.consoleException;
+import Exceptions.noneExist;
+import SaveLoad.Load;
+import SaveLoad.Save;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public class Storage {
+public class Manager implements Load, Save{
     Scanner scanner = new Scanner(System.in);
-    public ArrayList<individualStorage> availableStorage;
+    private ArrayList<individualStorage> availableStorage;
 
-    public Storage(){
+    public Manager(){
         availableStorage = new ArrayList<>();
+    }
+
+    public ArrayList<individualStorage> getAvailableStorage(){
+        return availableStorage;
     }
 
     //EFFECTS: show all storage available
     public void displayStorage(){
         for (individualStorage s : availableStorage) {
-            System.out.println("Storage" + availableStorage.indexOf(s) + " " + "[" + s.name + "]");
+            System.out.println(s.getName());
             s.display();
         }
-
     }
 
+    //REQUIRES: this is a new storage which is not in the list before
     //MODIFIES: availableStorage
     //EFFECTS: add a new individualStorage into availableStorage
     public void addNew(String nm){
@@ -41,62 +52,78 @@ public class Storage {
         }
     }
 
-    public void StorageToStore(){
-        String chooseIndividual = "";
-        System.out.println("Where would you like to store this item?");
-        chooseIndividual = scanner.nextLine();
+    public void manageOne() throws noneExist {
+        System.out.println("Please enter the storage you want to manage");
+        String manageStorage = scanner.nextLine();
         boolean flag = false;
-        for (individualStorage s : availableStorage){
-            if (s.name.equals(chooseIndividual)){
-                String itName = "";
-                System.out.println("Please enter the name of the item you would like to store.");
-                itName = scanner.nextLine();
-                s.storeItem(itName);
+        for (individualStorage s: availableStorage){
+            if (s.getName().equals(manageStorage)){
+                try {
+                    s.doSomething(s);
+                } catch (consoleException e) {
+                    System.out.println("Sorry. I can't understand the option you entered.");
+                }
                 flag = true;
                 break;
             }
         }
         if (!flag){
-            System.out.println("Sorry. The storage you entered doesn't exist.");
+            throw new noneExist();
         }
     }
 
     //MODIFIES: individualStorage
     //EFFECTS: move an item from one individual storage to another
-    public void move(){
+    public void move() throws noneExist {
         System.out.println("Where is the place this item is at now?");
         String originPlace = scanner.nextLine();
         boolean flag = false;
         for (individualStorage s : availableStorage){
-            if (s.name.equals(originPlace)){
+            if (s.getName().equals(originPlace)){
                 System.out.println("Please enter the name of the item you would like to remove.");
                 String itName = scanner.nextLine();
-                Item it = new unlimitedUse(itName);
+                ordinaryItem it = new ordinaryItem(itName);
                 s.removeItem(it);
                 flag = true;
                 System.out.println("Which place would you like to move this item to?");
                 String isName = scanner.nextLine();
                 Boolean check = false;
                 for (individualStorage iS : availableStorage){
-                    if (iS.name.equals(isName)){
+                    if (iS.getName().equals(isName)){
                         iS.addItem(it);
                         check = true;
                         break;
                     }
                 }
                 if (!check){
-                    System.out.println("Sorry. The storage you entered doesn't exist.");
+                    throw new noneExist();
                 }
                 break;
             }
         }
         if (!flag){
-            System.out.println("Sorry. The storage you entered doesn't exist.");
+            throw new noneExist();
         }
     }
 
     public void delete(){
         System.out.println("You choose to discard an item.");
+    }
+
+    public List<String> save() throws IOException {
+        PrintWriter writer = new PrintWriter("saveFile.txt","UTF-8");
+        for (individualStorage i: availableStorage){
+            writer.println(i.getName());
+            writer.println(i.getItems());
+        }
+        writer.close();
+        List<String> savefile = Files.readAllLines(Paths.get("saveFile.txt"));
+        return savefile;
+    }
+
+    public List<String> load() throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get("inputFile.txt"));
+        return lines;
     }
 
 }

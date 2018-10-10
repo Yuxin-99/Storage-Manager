@@ -1,99 +1,68 @@
 package ui;
 
-import Model.Storage;
-import Model.individualStorage;
-import SaveLoad.Load;
-import SaveLoad.Save;
+import Model.Manager;
 
-import java.io.PrintWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
+import Exceptions.consoleException;
+import Exceptions.noneExist;
 
-public class Main implements Load, Save{
+public class Main{
     static Scanner scanner = new Scanner(System.in);
-    public static Storage allStorage;
+    public static Manager manager;
 
-    public Main(){
-        allStorage = new Storage();
-    }
-
-    public static void main(String[] args) throws IOException {
-        Main main = new Main();
+    public static void main(String[] args) throws IOException{
+        manager = new Manager();
         String option = "";
-        allStorage.addNew("bookshelf");
-        allStorage.addNew("plastic case");
-        allStorage.addNew("wardrobe");
-        allStorage.availableStorage.get(0).setMaxCapacity(6);
-        allStorage.availableStorage.get(1).setMaxCapacity(3);
-        allStorage.availableStorage.get(2).setMaxCapacity(10);
+        manager.addNew("bookshelf");
+        manager.addNew("plastic case");
+        manager.addNew("wardrobe");
+        manager.getAvailableStorage().get(0).setMaxCapacity(6);
+        manager.getAvailableStorage().get(1).setMaxCapacity(3);
+        manager.getAvailableStorage().get(2).setMaxCapacity(10);
 
-        allStorage.availableStorage.get(0).storeItem("dictionary");
-        allStorage.availableStorage.get(0).storeItem("laptop");
-        allStorage.availableStorage.get(1).storeItem("lipstick");
-        allStorage.availableStorage.get(1).storeItem("scarf");
-        allStorage.availableStorage.get(2).storeItem("coats");
+        manager.getAvailableStorage().get(0).storeItem1("dictionary");
+        manager.getAvailableStorage().get(0).storeItem1("laptop");
+        manager.getAvailableStorage().get(1).storeItem1("lipstick");
+        manager.getAvailableStorage().get(1).storeItem1("scarf");
+        manager.getAvailableStorage().get(2).storeItem1("coats");
 
         while (true){
-            System.out.println("Welcome to your storage manager! What would you like to do? [1]display the whole storage, [2]add a storage, [3]add an item, [4]move an item to a new place,");
-            System.out.println("[5]discard an item, [6]save the information, [7]load a file, [8]quit. Please choose one number as your option.");
+            System.out.println("Welcome to your storage manager! What would you like to do?");
+            System.out.println("[1]display the whole storage, [2]add a storage, [3]manage one storage, [4]move an item to a new place, [5]save the information, [6]load a file, [7]quit.");
+            System.out.println("Please choose one number as your option.");
             option = scanner.nextLine();
-            if (option.equals("1")){
-                allStorage.displayStorage();
-            }
-
-            else if (option.equals("2")){
+            if (option.equals("1")) {
+                manager.displayStorage();
+            } else if (option.equals("2")) {
                 System.out.println("Please enter the name of the new storage.");
                 String stName = scanner.nextLine();
-                allStorage.addNew(stName);
-            }
-
-            else if (option.equals("3")){
-                allStorage.StorageToStore();
-            }
-
-            else if (option.equals("4")){
-                allStorage.move();
-            }
-
-            else if (option.equals("5")){
-                allStorage.delete();
-            }
-
-            else if (option.equals("6")){
-                Main m = new Main();
-                m.save();
-            }
-
-            else if (option.equals("7")){
-                Main m =new Main();
-                m.load();
-            }
-
-            else if (option.equals("8")){
-
+                manager.addNew(stName);
+            } else if (option.equals("3")) {
+                try {
+                    manager.manageOne();
+                } catch (noneExist e) {
+                    System.out.println("Sorry. The storage you entered doesn't exist.");
+                }
+            } else if (option.equals("4")) {
+                try {
+                    manager.move();
+                } catch (noneExist e) {
+                    System.out.println("Sorry. The storage (item) you entered doesn't exist.");
+                }
+            } else if (option.equals("5")) {
+                manager.save();
+            } else if (option.equals("6")) {
+                manager.load();
+            } else if (option.equals("7")) {
+                break;
+            } else {
+                try {
+                    throw new consoleException();
+                } catch (consoleException e) {
+                    System.out.println("Sorry. I can't understand the option you entered.");
+                }
             }
         }
-    }
-
-    @Override
-    public List<String> save() throws IOException{
-        PrintWriter writer = new PrintWriter("saveFile.txt","UTF-8");
-        for (individualStorage i: allStorage.availableStorage){
-            writer.println(i.name);
-            writer.println(i.Items);
-        }
-        writer.close();
-        List<String> savefile = Files.readAllLines(Paths.get("saveFile.txt"));
-        return savefile;
-    }
-
-    @Override
-    public List<String> load() throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get("inputFile.txt"));
-        return lines;
     }
 }

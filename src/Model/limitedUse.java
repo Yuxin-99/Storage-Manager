@@ -15,4 +15,10 @@ public class limitedUse extends Item{
     public void setLimitation(int i){
         limitation = i;
     }
+
+    @Override
+    public void showItem(){
+        System.out.println("This is an item with a limited lifetime. The limitation is " + limitation + " days.");
+        super.showItem();
+    }
 }

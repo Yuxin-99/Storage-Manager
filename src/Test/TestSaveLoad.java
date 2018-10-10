@@ -1,30 +1,27 @@
 package Test;
 
+import Model.Manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ui.Main;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static ui.Main.allStorage;
 
 public class TestSaveLoad {
-    private Main main;
+    private Manager manager;
 
     @BeforeEach
     public void runBefore(){
-        main = new Main();
+        manager = new Manager();
     }
 
     @Test
     public void TestLoad() throws IOException {
-        List<String> text = main.load();
+        List<String> text = manager.load();
         List<String> testText = new ArrayList<>();
         testText.add("bookshelf");
         testText.add("[textbook, notebook, laptop]");
@@ -43,13 +40,13 @@ public class TestSaveLoad {
 
     @Test
     public void TestSave() throws IOException {
-        main.allStorage.addNew("pink box");
-        main.allStorage.addNew("plastic case");
-        main.allStorage.availableStorage.get(0).setMaxCapacity(6);
-        main.allStorage.availableStorage.get(1).setMaxCapacity(3);
-        main.allStorage.availableStorage.get(0).storeItem("keys");
-        main.allStorage.availableStorage.get(0).storeItem("tea");
-        List<String> file = main.save();
+        manager.addNew("pink box");
+        manager.addNew("plastic case");
+        manager.getAvailableStorage().get(0).setMaxCapacity(6);
+        manager.getAvailableStorage().get(1).setMaxCapacity(3);
+        manager.getAvailableStorage().get(0).storeItem1("keys");
+        manager.getAvailableStorage().get(0).storeItem1("tea");
+        List<String> file = manager.save();
         List<String> testFile = new ArrayList<>();
         testFile.add("pink box");
         testFile.add("[keys, tea]");

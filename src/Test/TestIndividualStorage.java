@@ -1,9 +1,8 @@
 package Test;
 
 import Model.individualStorage;
-import Model.Item;
 
-import Model.unlimitedUse;
+import Model.ordinaryItem;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -24,12 +23,12 @@ public class TestIndividualStorage {
     @Test
     public void TestAddItem(){
         //assume the box is empty at first
-        assertFalse(box.Items.size() == 1);
+        assertFalse(box.getItems().size() == 1);
 
-        Item newItem = new unlimitedUse("book");
-        box.Items.add(newItem);
-        assertTrue(box.Items.size() == 1);
-        assertEquals(box.Items.get(0), newItem);
+        ordinaryItem newItem = new ordinaryItem("book");
+        box.getItems().add(newItem);
+        assertTrue(box.getItems().size() == 1);
+        assertEquals(box.getItems().get(0), newItem);
     }
 
     //Test no more items can be added if the storage is full
@@ -39,22 +38,20 @@ public class TestIndividualStorage {
         box.setMaxCapacity(6);
 
         //Add some items to the box first
-        box.storeItem("book");
-        box.storeItem("pen");
-        box.storeItem("hat");
-        box.storeItem("cup");
-        box.storeItem("toys");
+        box.storeItem1("book");
+        box.storeItem1("pen");
+        box.storeItem1("hat");
+        box.storeItem1("cup");
+        box.storeItem1("toys");
 
-        Item item5 = new unlimitedUse("crackers");
-        Item item6 = new unlimitedUse("chips");
+        ordinaryItem item5 = new ordinaryItem("crackers");
+        ordinaryItem item6 = new ordinaryItem("chips");
         //Add another item, and this should be added successfully
         box.addItem(item5);
-        assertTrue(box.verifyStore(item5));
-        assertEquals(box.Items.size(), 6);
+        assertEquals(box.getItems().size(), 6);
 
         //Add another item, and this should be unsuccessful
         box.addItem(item6);
-        assertFalse(box.Items.contains(item6));
-        assertEquals(box.Items.size(), 6);
+        assertEquals(box.getItems().size(), 6);
     }
 }
