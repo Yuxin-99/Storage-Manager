@@ -1,6 +1,6 @@
 package Model;
 
-import Exceptions.consoleException;
+import Exceptions.fullStorage;
 import Exceptions.noneExist;
 import SaveLoad.Load;
 import SaveLoad.Save;
@@ -60,8 +60,8 @@ public class Manager implements Load, Save{
             if (s.getName().equals(manageStorage)){
                 try {
                     s.doSomething(s);
-                } catch (consoleException e) {
-                    System.out.println("Sorry. I can't understand the option you entered.");
+                } catch (Exceptions.fullStorage fullStorage) {
+                    fullStorage.result();
                 }
                 flag = true;
                 break;

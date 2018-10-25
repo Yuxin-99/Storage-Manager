@@ -1,5 +1,6 @@
 package Test;
 
+import Exceptions.invalidLimit;
 import Model.individualStorage;
 
 import Model.ordinaryItem;
@@ -35,7 +36,10 @@ public class TestIndividualStorage {
     @Test
     public void TestAddMoreItems(){
         //Set the maxCapacity of the box
-        box.setMaxCapacity(6);
+        try {
+            box.setMaxCapacity(6);
+        } catch (Exceptions.invalidLimit invalidLimit) {
+        }
 
         //Add some items to the box first
         box.storeItem1("book");

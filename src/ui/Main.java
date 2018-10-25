@@ -4,7 +4,7 @@ import Model.Manager;
 
 import java.io.IOException;
 import java.util.Scanner;
-import Exceptions.consoleException;
+
 import Exceptions.noneExist;
 
 public class Main{
@@ -17,9 +17,9 @@ public class Main{
         manager.addNew("bookshelf");
         manager.addNew("plastic case");
         manager.addNew("wardrobe");
-        manager.getAvailableStorage().get(0).setMaxCapacity(6);
-        manager.getAvailableStorage().get(1).setMaxCapacity(3);
-        manager.getAvailableStorage().get(2).setMaxCapacity(10);
+        manager.getAvailableStorage().get(0);
+        manager.getAvailableStorage().get(1);
+        manager.getAvailableStorage().get(2);
 
         manager.getAvailableStorage().get(0).storeItem1("dictionary");
         manager.getAvailableStorage().get(0).storeItem1("laptop");
@@ -32,6 +32,8 @@ public class Main{
             System.out.println("[1]display the whole storage, [2]add a storage, [3]manage one storage, [4]move an item to a new place, [5]save the information, [6]load a file, [7]quit.");
             System.out.println("Please choose one number as your option.");
             option = scanner.nextLine();
+            //Assume consoleException, checkInput throws consoleException
+            // try { checkInput() } catch（ConsoleException e)
             if (option.equals("1")) {
                 manager.displayStorage();
             } else if (option.equals("2")) {
@@ -57,11 +59,12 @@ public class Main{
             } else if (option.equals("7")) {
                 break;
             } else {
-                try {
-                    throw new consoleException();
-                } catch (consoleException e) {
-                    System.out.println("Sorry. I can't understand the option you entered.");
-                }
+//                try {
+//                    throw new consoleException();
+//                } catch (consoleException e) {
+//                    System.out.println("Sorry. I can't understand the option you entered.");
+//                }
+                System.out.println("Try again");
             }
         }
     }

@@ -1,5 +1,6 @@
 package Test;
 
+import Exceptions.invalidLimit;
 import Model.Manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,8 +43,14 @@ public class TestSaveLoad {
     public void TestSave() throws IOException {
         manager.addNew("pink box");
         manager.addNew("plastic case");
-        manager.getAvailableStorage().get(0).setMaxCapacity(6);
-        manager.getAvailableStorage().get(1).setMaxCapacity(3);
+        try {
+            manager.getAvailableStorage().get(0).setMaxCapacity(6);
+        } catch (Exceptions.invalidLimit invalidLimit) {
+        }
+        try {
+            manager.getAvailableStorage().get(1).setMaxCapacity(3);
+        } catch (Exceptions.invalidLimit invalidLimit) {
+        }
         manager.getAvailableStorage().get(0).storeItem1("keys");
         manager.getAvailableStorage().get(0).storeItem1("tea");
         List<String> file = manager.save();

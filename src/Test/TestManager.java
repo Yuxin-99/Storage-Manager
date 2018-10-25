@@ -1,5 +1,6 @@
 package Test;
 
+import Exceptions.invalidLimit;
 import Model.Manager;
 import org.junit.jupiter.api.Test;
 
@@ -35,8 +36,14 @@ public class TestManager {
         myManager.addNew("plastic case");
         myManager.addNew("wardrobe");
 
-        myManager.getAvailableStorage().get(0).setMaxCapacity(6);
-        myManager.getAvailableStorage().get(1).setMaxCapacity(3);
+        try {
+            myManager.getAvailableStorage().get(0).setMaxCapacity(6);
+        } catch (Exceptions.invalidLimit invalidLimit) {
+        }
+        try {
+            myManager.getAvailableStorage().get(1).setMaxCapacity(3);
+        } catch (Exceptions.invalidLimit invalidLimit) {
+        }
 
         //add items to some storage
         myManager.getAvailableStorage().get(0).storeItem1("keys");
