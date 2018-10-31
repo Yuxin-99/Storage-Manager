@@ -18,7 +18,7 @@ public class fullExceptionTest {
         try {
             m.setMaxCapacity(1);
             m.storeItem1("ruler");
-            System.out.println("Maximum set!");
+            System.out.println("Pass!Maximum set!");
         } catch (Exceptions.invalidLimit invalidLimit) {
             fail("It is a valid maximum!");
         }
@@ -30,7 +30,7 @@ public class fullExceptionTest {
             m.setMaxCapacity(-1);
             fail("It is not a valid maximum!");
         } catch (Exceptions.invalidLimit invalidLimit) {
-            System.out.println("Catch it!");
+            System.out.println("Pass!");
         }
     }
 }

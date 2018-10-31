@@ -1,6 +1,7 @@
 package Model;
 
 import Exceptions.fullStorage;
+import Exceptions.invalidLimit;
 import Exceptions.noneExist;
 import SaveLoad.Load;
 import SaveLoad.Save;
@@ -9,25 +10,23 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Manager implements Load, Save{
     Scanner scanner = new Scanner(System.in);
-    private ArrayList<individualStorage> availableStorage;
+    private HashMap<String,individualStorage> availableStorage;
 
     public Manager(){
-        availableStorage = new ArrayList<>();
+        availableStorage = new HashMap<>();
     }
 
-    public ArrayList<individualStorage> getAvailableStorage(){
+    public HashMap<String, individualStorage> getAvailableStorage(){
         return availableStorage;
     }
 
     //EFFECTS: show all storage available
     public void displayStorage(){
-        for (individualStorage s : availableStorage) {
+        for (individualStorage s : availableStorage.values()) {
             System.out.println(s.getName());
             s.display();
         }
@@ -38,13 +37,13 @@ public class Manager implements Load, Save{
     //EFFECTS: add a new individualStorage into availableStorage
     public void addNew(String nm){
         individualStorage newIndividual = new individualStorage(nm);
-        availableStorage.add(newIndividual);
+        availableStorage.put(nm, newIndividual);
         verifyAddedStorage(newIndividual);
     }
 
     //EFFECTS: verify a new storage is added to the availableStorage or not
     public boolean verifyAddedStorage(individualStorage inSt){
-        if (this.availableStorage.contains(inSt)){
+        if (this.availableStorage.containsKey(inSt.getName())){
             return true;
         }
         else {
@@ -56,65 +55,49 @@ public class Manager implements Load, Save{
         System.out.println("Please enter the storage you want to manage");
         String manageStorage = scanner.nextLine();
         boolean flag = false;
-        for (individualStorage s: availableStorage){
-            if (s.getName().equals(manageStorage)){
-                try {
-                    s.doSomething(s);
-                } catch (Exceptions.fullStorage fullStorage) {
-                    fullStorage.result();
-                }
-                flag = true;
-                break;
+        //for (individualStorage s: availableStorage){
+        if(availableStorage.containsKey(manageStorage)){
+            try {
+                availableStorage.get(manageStorage).doSomething();
+            } catch (Exceptions.fullStorage fullStorage) {
+                fullStorage.result();
             }
         }
-        if (!flag){
-            throw new noneExist();
-        }
+        else {throw new noneExist();}
     }
+
 
     //MODIFIES: individualStorage
     //EFFECTS: move an item from one individual storage to another
     public void move() throws noneExist {
         System.out.println("Where is the place this item is at now?");
         String originPlace = scanner.nextLine();
-        boolean flag = false;
-        for (individualStorage s : availableStorage){
-            if (s.getName().equals(originPlace)){
-                System.out.println("Please enter the name of the item you would like to remove.");
-                String itName = scanner.nextLine();
-                ordinaryItem it = new ordinaryItem(itName);
-                s.removeItem(it);
-                flag = true;
-                System.out.println("Which place would you like to move this item to?");
-                String isName = scanner.nextLine();
-                Boolean check = false;
-                for (individualStorage iS : availableStorage){
-                    if (iS.getName().equals(isName)){
-                        iS.addItem(it);
-                        check = true;
-                        break;
-                    }
+        if (availableStorage.containsKey(originPlace)){
+            System.out.println("Please enter the name of the item you would like to remove.");
+            String itName = scanner.nextLine();
+            ordinaryItem it = new ordinaryItem(itName);
+            System.out.println("Which place would you like to move this item to?");
+            String isName = scanner.nextLine();
+            if (availableStorage.containsKey(isName)){
+                try {
+                    availableStorage.get(isName).addItem(it);
+                    availableStorage.get(originPlace).moveItem(itName);
+                } catch (Exceptions.fullStorage fullStorage) {
+                    System.out.println("Sorry, this storage is full.");
                 }
-                if (!check){
-                    throw new noneExist();
-                }
-                break;
+            } else {
+                throw new noneExist();
             }
-        }
-        if (!flag){
+        } else {
             throw new noneExist();
         }
     }
 
-    public void delete(){
-        System.out.println("You choose to discard an item.");
-    }
-
     public List<String> save() throws IOException {
         PrintWriter writer = new PrintWriter("saveFile.txt","UTF-8");
-        for (individualStorage i: availableStorage){
+        for (individualStorage i: availableStorage.values()){
             writer.println(i.getName());
-            writer.println(i.getItems());
+            writer.println(i.getItems().values());
         }
         writer.close();
         List<String> savefile = Files.readAllLines(Paths.get("saveFile.txt"));

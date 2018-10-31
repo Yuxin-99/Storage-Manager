@@ -23,10 +23,10 @@ public class TestManager {
     @Test
     public void TestAddNewStorage(){
         //assume no storage available at first
-        assertTrue(myManager.getAvailableStorage().size() == 0);
+        assertTrue(myManager.getAvailableStorage().keySet().size() == 0);
         myManager.addNew("pink box");
-        assertTrue(myManager.getAvailableStorage().size() == 1);
-        assertEquals(myManager.getAvailableStorage().get(0).getName(), "pink box");
+        assertTrue(myManager.getAvailableStorage().keySet().size() == 1);
+        assertTrue(myManager.getAvailableStorage().containsKey("pink box"));
     }
 
     @Test
@@ -37,19 +37,20 @@ public class TestManager {
         myManager.addNew("wardrobe");
 
         try {
-            myManager.getAvailableStorage().get(0).setMaxCapacity(6);
+            myManager.getAvailableStorage().get("pink box").setMaxCapacity(6);
         } catch (Exceptions.invalidLimit invalidLimit) {
         }
         try {
-            myManager.getAvailableStorage().get(1).setMaxCapacity(3);
+            myManager.getAvailableStorage().get("plastic case").setMaxCapacity(3);
         } catch (Exceptions.invalidLimit invalidLimit) {
+            invalidLimit.printStackTrace();
         }
 
         //add items to some storage
-        myManager.getAvailableStorage().get(0).storeItem1("keys");
-        myManager.getAvailableStorage().get(0).storeItem1("tea");
+        myManager.getAvailableStorage().get("pink box").storeItem1("keys");
+        myManager.getAvailableStorage().get("pink box").storeItem1("tea");
 
-        myManager.getAvailableStorage().get(1).storeItem1("pencil");
+        myManager.getAvailableStorage().get("plastic case").storeItem1("pencil");
 
         //move an item from the pink box to the wardrobe
     }

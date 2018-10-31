@@ -17,15 +17,12 @@ public class Main{
         manager.addNew("bookshelf");
         manager.addNew("plastic case");
         manager.addNew("wardrobe");
-        manager.getAvailableStorage().get(0);
-        manager.getAvailableStorage().get(1);
-        manager.getAvailableStorage().get(2);
 
-        manager.getAvailableStorage().get(0).storeItem1("dictionary");
-        manager.getAvailableStorage().get(0).storeItem1("laptop");
-        manager.getAvailableStorage().get(1).storeItem1("lipstick");
-        manager.getAvailableStorage().get(1).storeItem1("scarf");
-        manager.getAvailableStorage().get(2).storeItem1("coats");
+        manager.getAvailableStorage().get("bookshelf").storeItem1("dictionary");
+        manager.getAvailableStorage().get("bookshelf").storeItem1("laptop");
+        manager.getAvailableStorage().get("plastic case").storeItem1("lipstick");
+        manager.getAvailableStorage().get("plastic case").storeItem1("scarf");
+        manager.getAvailableStorage().get("wardrobe").storeItem1("coats");
 
         while (true){
             System.out.println("Welcome to your storage manager! What would you like to do?");
@@ -59,11 +56,6 @@ public class Main{
             } else if (option.equals("7")) {
                 break;
             } else {
-//                try {
-//                    throw new consoleException();
-//                } catch (consoleException e) {
-//                    System.out.println("Sorry. I can't understand the option you entered.");
-//                }
                 System.out.println("Try again");
             }
         }

@@ -1,6 +1,7 @@
 package Test.ExceptionTests;
 
 
+import Exceptions.fullStorage;
 import Exceptions.noneExist;
 import Model.individualStorage;
 import Model.ordinaryItem;
@@ -16,9 +17,12 @@ public class noneExistTest {
 
     @Test
     public void TestNoneExist0(){
-        m.addItem(i0);
         try {
-            m.removeItem(i0);
+            m.addItem(i0);
+        } catch (Exceptions.fullStorage fullStorage) {
+        }
+        try {
+            m.moveItem("ruler");
             System.out.println("YAY! Remove!");
             assertTrue(m.getItems().size() == 0);
         } catch (Exceptions.noneExist noneExist) {
@@ -29,10 +33,10 @@ public class noneExistTest {
     @Test
     public void TestNoneExist1(){
         try{
-            m.removeItem(i0);
+            m.moveItem("ruler");
             fail("This item does not exist!");
         } catch (Exceptions.noneExist noneExist) {
-            System.out.println("Catch it!");
+            System.out.println("Pass!");
         }
     }
 }
