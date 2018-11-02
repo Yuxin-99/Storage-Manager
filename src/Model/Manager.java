@@ -81,6 +81,7 @@ public class Manager implements Load, Save{
             if (availableStorage.containsKey(isName)){
                 try {
                     availableStorage.get(isName).addItem(it);
+                    it.setIndividualStorage(isName);
                     availableStorage.get(originPlace).moveItem(itName);
                 } catch (Exceptions.fullStorage fullStorage) {
                     System.out.println("Sorry, this storage is full.");
@@ -97,7 +98,7 @@ public class Manager implements Load, Save{
         PrintWriter writer = new PrintWriter("saveFile.txt","UTF-8");
         for (individualStorage i: availableStorage.values()){
             writer.println(i.getName());
-            writer.println(i.getItems().values());
+            writer.println(i.getItems());
         }
         writer.close();
         List<String> savefile = Files.readAllLines(Paths.get("saveFile.txt"));

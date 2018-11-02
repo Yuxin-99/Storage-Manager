@@ -56,7 +56,7 @@ public class TestSaveLoad {
         List<String> file = manager.save();
         List<String> testFile = new ArrayList<>();
         testFile.add("pink box");
-        testFile.add("[tea, keys]");
+        testFile.add("[keys, tea]");
         testFile.add("plastic case");
         testFile.add("[]");
         assertEquals(testFile, file);

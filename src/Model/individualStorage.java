@@ -1,7 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Objects;
 import java.util.Scanner;
 
 import Exceptions.invalidLimit;
@@ -11,11 +11,11 @@ import Exceptions.fullStorage;
 public class individualStorage {
     Scanner scanner = new Scanner(System.in);
     private String name;
-    private HashMap<String, Item> Items;
+    private ArrayList<Item> Items;
     private Integer maxCapacity;
 
     public individualStorage(String name){
-        Items = new HashMap<>();
+        Items = new ArrayList<>();
         this.name = name;
     }
 
@@ -23,7 +23,7 @@ public class individualStorage {
         return name;
     }
 
-    public HashMap<String, Item> getItems(){
+    public ArrayList<Item> getItems(){
         return Items;
     }
 
@@ -46,9 +46,14 @@ public class individualStorage {
                 System.out.println("Please enter the name of the item.");
                 String itName = scanner.nextLine();
                 boolean flag = false;
-                if (Items.containsKey(itName)){
-                    Items.get(itName).showItem();
-                } else {
+                for (Item it : Items) {
+                    if (it.getName().equals(itName)) {
+                        it.showItem();
+                        flag = !flag;
+                        break;
+                    }
+                }
+                if (!flag) {
                     throw new noneExist();
                 }
             } else if (command.equals("3")) {
@@ -95,7 +100,7 @@ public class individualStorage {
     //EFFECTS: show all items in this individual storage
     public void display(){
         String res = "";
-        for (Item item: Items.values()) {
+        for (Item item: Items) {
             res = res + item.getName() + "  ";
         }
         System.out.println("[" + res + "]");
@@ -111,7 +116,7 @@ public class individualStorage {
             int lim = Integer.parseInt(scanner.nextLine());
             try {
                 newItem.setLimitation(lim);
-                Items.put(nm,newItem);
+                Items.add(newItem);
                 break;
             } catch (invalidLimit e){
                 e.result();
@@ -124,21 +129,21 @@ public class individualStorage {
     //EFFECTS: add an ordinaryItem into the Items of this individualStorage
     public void storeItem1(String nm){
         Item newItem = new ordinaryItem(nm);
-        Items.put(nm,newItem);
+        Items.add(newItem);
     }
 
     //EFFECTS: verify an item is added to the list of items of this storage or not
     public boolean verifyStore(Item i) throws fullStorage {
         if (maxCapacity == null){
-            return Items.values().contains(i);
+            return Items.contains(i);
         }
         else {
             if (Items.size() > maxCapacity){
-                Items.remove(i.getName());
+                Items.remove(i);
                 throw new fullStorage();
             }
             else {
-                return Items.values().contains(i);
+                return Items.contains(i);
             }
         }
     }
@@ -146,15 +151,36 @@ public class individualStorage {
     //MODIFIES: this
     //EFFECTS: add an item which is moved from another individual storage
     public void addItem(Item i) throws fullStorage {
-        Items.put(i.getName(),i);
+        Items.add(i);
         verifyStore(i);
+        i.setIndividualStorage(this.getName());
     }
 
     public void moveItem(String nm) throws noneExist {
-        if (Items.containsKey(nm)){
-            Items.remove(nm);
-        } else {
+        boolean flag = false;
+        for (Item S : Items){
+            if (S.name.equals(nm)){
+                Items.remove(S);
+                flag = true;
+                break;
+            }
+        }
+        if (!flag){
             throw new noneExist();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        individualStorage storage = (individualStorage) o;
+        return Objects.equals(name, storage.name);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name);
     }
 }

@@ -7,10 +7,9 @@ import Model.individualStorage;
 import Model.ordinaryItem;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TestIndividualStorage {
@@ -33,7 +32,8 @@ public class TestIndividualStorage {
         } catch (Exceptions.fullStorage fullStorage) {
         }
         assertTrue(box.getItems().size() == 1);
-        assertTrue(box.getItems().containsKey("book"));
+        assertTrue(box.getItems().contains(newItem));
+        assertEquals(newItem.getIndividualStorage(), box);
     }
 
     //Test no more items can be added if the storage is full
@@ -60,6 +60,7 @@ public class TestIndividualStorage {
         } catch (Exceptions.fullStorage fullStorage) {
         }
         assertEquals(box.getItems().size(), 6);
+        assertTrue(item5.getIndividualStorage().equals(box));
 
         //Add another item, and this should be unsuccessful
         try {
@@ -68,5 +69,6 @@ public class TestIndividualStorage {
         }
         box.display();
         assertEquals(box.getItems().size(), 6);
+        assertNull(item6.getIndividualStorage());
     }
 }
