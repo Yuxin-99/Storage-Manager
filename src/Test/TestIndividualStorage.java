@@ -1,7 +1,5 @@
 package Test;
 
-import Exceptions.fullStorage;
-import Exceptions.invalidLimit;
 import Model.individualStorage;
 
 import Model.ordinaryItem;
@@ -24,15 +22,15 @@ public class TestIndividualStorage {
     @Test
     public void TestAddItem(){
         //assume the box is empty at first
-        assertFalse(box.getItems().size() == 1);
+        assertFalse(box.getStocks().size() == 1);
 
         ordinaryItem newItem = new ordinaryItem("book");
         try {
             box.addItem(newItem);
         } catch (Exceptions.fullStorage fullStorage) {
         }
-        assertTrue(box.getItems().size() == 1);
-        assertTrue(box.getItems().contains(newItem));
+        assertTrue(box.getStocks().size() == 1);
+        assertTrue(box.getStocks().contains(newItem));
         assertEquals(newItem.getIndividualStorage(), box);
     }
 
@@ -59,7 +57,7 @@ public class TestIndividualStorage {
             box.addItem(item5);
         } catch (Exceptions.fullStorage fullStorage) {
         }
-        assertEquals(box.getItems().size(), 6);
+        assertEquals(box.getStocks().size(), 6);
         assertTrue(item5.getIndividualStorage().equals(box));
 
         //Add another item, and this should be unsuccessful
@@ -67,8 +65,7 @@ public class TestIndividualStorage {
             box.addItem(item6);
         } catch (Exceptions.fullStorage fullStorage) {
         }
-        box.display();
-        assertEquals(box.getItems().size(), 6);
+        assertEquals(box.getStocks().size(), 6);
         assertNull(item6.getIndividualStorage());
     }
 }

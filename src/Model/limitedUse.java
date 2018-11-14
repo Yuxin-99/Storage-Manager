@@ -1,6 +1,7 @@
 package Model;
 
 import Exceptions.invalidLimit;
+import javafx.beans.InvalidationListener;
 
 public class limitedUse extends Item{
     private int limitation;
@@ -23,8 +24,9 @@ public class limitedUse extends Item{
     }
 
     @Override
-    public void showItem(){
+    public void display(){
         System.out.println("This is an item with a limited lifetime. The limitation is " + limitation + " days.");
-        super.showItem();
+        super.display();
     }
+
 }

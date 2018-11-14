@@ -1,8 +1,6 @@
 package Test.ExceptionTests;
 
 
-import Exceptions.fullStorage;
-import Exceptions.noneExist;
 import Model.individualStorage;
 import Model.ordinaryItem;
 import org.junit.jupiter.api.Test;
@@ -24,7 +22,7 @@ public class noneExistTest {
         try {
             m.moveItem("ruler");
             System.out.println("YAY! Remove!");
-            assertTrue(m.getItems().size() == 0);
+            assertTrue(m.getStocks().size() == 0);
         } catch (Exceptions.noneExist noneExist) {
             fail("False exception...");
         }

@@ -1,7 +1,5 @@
 package Model;
 
-import Exceptions.fullStorage;
-import Exceptions.invalidLimit;
 import Exceptions.noneExist;
 import SaveLoad.Load;
 import SaveLoad.Save;
@@ -27,8 +25,7 @@ public class Manager implements Load, Save{
     //EFFECTS: show all storage available
     public void displayStorage(){
         for (individualStorage s : availableStorage.values()) {
-            System.out.println(s.getName());
-            s.display();
+            s.showStock();
         }
     }
 
@@ -36,29 +33,20 @@ public class Manager implements Load, Save{
     //MODIFIES: availableStorage
     //EFFECTS: add a new individualStorage into availableStorage
     public void addNew(String nm){
-        individualStorage newIndividual = new individualStorage(nm);
-        availableStorage.put(nm, newIndividual);
-        verifyAddedStorage(newIndividual);
+        availableStorage.put(nm, new individualStorage(nm));
     }
 
     //EFFECTS: verify a new storage is added to the availableStorage or not
-    public boolean verifyAddedStorage(individualStorage inSt){
-        if (this.availableStorage.containsKey(inSt.getName())){
-            return true;
-        }
-        else {
-            return false;
-        }
+    private boolean verifyStorage(String inSt){
+        return availableStorage.containsKey(inSt);
     }
 
     public void manageOne() throws noneExist {
         System.out.println("Please enter the storage you want to manage");
         String manageStorage = scanner.nextLine();
-        boolean flag = false;
-        //for (individualStorage s: availableStorage){
-        if(availableStorage.containsKey(manageStorage)){
+        if(verifyStorage(manageStorage)){
             try {
-                availableStorage.get(manageStorage).doSomething();
+                availableStorage.get(manageStorage).furtherManage();
             } catch (Exceptions.fullStorage fullStorage) {
                 fullStorage.result();
             }
@@ -66,20 +54,19 @@ public class Manager implements Load, Save{
         else {throw new noneExist();}
     }
 
-
     //MODIFIES: individualStorage
     //EFFECTS: move an item from one individual storage to another
     public void move() throws noneExist {
         System.out.println("Where is the place this item is at now?");
         String originPlace = scanner.nextLine();
-        if (availableStorage.containsKey(originPlace)){
+        if (verifyStorage(originPlace)){
             System.out.println("Please enter the name of the item you would like to remove.");
             String itName = scanner.nextLine();
-            ordinaryItem it = new ordinaryItem(itName);
             System.out.println("Which place would you like to move this item to?");
             String isName = scanner.nextLine();
-            if (availableStorage.containsKey(isName)){
+            if (verifyStorage(isName)){
                 try {
+                    Item it = availableStorage.get(originPlace).getItem(itName);
                     availableStorage.get(isName).addItem(it);
                     it.setIndividualStorage(isName);
                     availableStorage.get(originPlace).moveItem(itName);
@@ -94,11 +81,25 @@ public class Manager implements Load, Save{
         }
     }
 
+    public void searchItem(){
+        System.out.println("Please enter the name of this item.");
+        String target = scanner.nextLine();
+        boolean flag = false;
+        for (individualStorage i: availableStorage.values()){
+            if (i.getStocks().contains(new ordinaryItem(target))){
+                flag = true;
+                System.out.println("This item is in: " + i.getName());
+            }
+        } if (! flag){
+            System.out.println("No such an item.");
+        }
+    }
+
     public List<String> save() throws IOException {
         PrintWriter writer = new PrintWriter("saveFile.txt","UTF-8");
         for (individualStorage i: availableStorage.values()){
             writer.println(i.getName());
-            writer.println(i.getItems());
+            writer.println(i.getStocks());
         }
         writer.close();
         List<String> savefile = Files.readAllLines(Paths.get("saveFile.txt"));

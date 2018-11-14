@@ -1,12 +1,16 @@
 package Model;
 
-public abstract class Item {
-    protected String name;
+import javafx.beans.Observable;
+
+import java.util.Objects;
+import java.util.Observer;
+
+public abstract class Item extends Stock{
     protected int amount;
     protected individualStorage individualStorage;
 
-    protected Item(String name){
-        this.name = name;
+    public Item(String name){
+        super(name);
         amount = 1;
     }
 
@@ -31,12 +35,18 @@ public abstract class Item {
         return individualStorage;
     }
 
-    public void addAmount(int a){
-        amount = amount + a;
+    public void addAmount(){
+        amount++;
     }
 
-    public void showItem(){
-        System.out.println("It's in Storage [" + individualStorage.getName()+ "]");
-        System.out.println("The amount of this item is " + amount + ".");
+    public void showStock(){
+        System.out.println(super.name);
     }
+
+    public void display(){
+        System.out.println("It's in Storage [" + individualStorage.getName()+ "]");
+        System.out.println("The amount of " + name + " is " + amount + ".");
+    }
+
+
 }
