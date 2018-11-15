@@ -3,16 +3,19 @@ package ui;
 import Model.Manager;
 
 import java.io.IOException;
+import java.util.Observable;
 import java.util.Scanner;
 
 import Exceptions.noneExist;
+import Model.dataNotifier;
 import Model.ordinaryItem;
 
-public class Main{
+public class Main extends Observable{
     static Scanner scanner = new Scanner(System.in);
     public static Manager manager;
 
     public static void main(String[] args) throws IOException{
+        dataNotifier d = new dataNotifier();
         manager = new Manager();
         String option = "";
         manager.addNew("bookshelf");

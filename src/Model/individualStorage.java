@@ -9,11 +9,12 @@ import Exceptions.fullStorage;
 public class individualStorage extends Stock {
     Scanner scanner = new Scanner(System.in);
     private ArrayList<Stock> stocks;
+    private dataNotifier d = new dataNotifier();
 
     public individualStorage(String name){
         super(name);
         stocks = new ArrayList<>();
-        addObserver(new dataSaver());
+        addObserver(d);
     }
 
     public ArrayList<Stock> getStocks(){
@@ -42,7 +43,7 @@ public class individualStorage extends Stock {
                         try {
                             getItem(itName).addAmount();
                             setChanged();
-                            notifyObservers(this);
+                            notifyObservers(itName);
                         } catch (Exceptions.noneExist noneExist) {}
                     } else {
                         String type = inputString("Does this item has a limited lifetime? Reply yes or no.");
@@ -73,6 +74,7 @@ public class individualStorage extends Stock {
                     }
                 }
             } else if (command.equals("7")) {
+                d.print();
                 break;
             } else {
                 System.out.println("Invalid command.");
@@ -106,7 +108,7 @@ public class individualStorage extends Stock {
                 stocks.add(newItem);
                 newItem.setIndividualStorage(name);
                 setChanged();
-                notifyObservers(this);
+                notifyObservers(nm);
                 break;
             } catch (invalidLimit e){
                 e.result();
@@ -122,7 +124,7 @@ public class individualStorage extends Stock {
         stocks.add(newItem);
         newItem.setIndividualStorage(name);
         setChanged();
-        notifyObservers();
+        notifyObservers(nm);
     }
 
     //MODIFIES: this
@@ -136,7 +138,7 @@ public class individualStorage extends Stock {
             } else {
                 stocks.add(i);
                 setChanged();
-                notifyObservers(this);
+                notifyObservers(i.getName());
             }
             i.setIndividualStorage(this.getName());
         } else {
