@@ -3,10 +3,10 @@ package Model;
 import Exceptions.invalidLimit;
 import javafx.beans.InvalidationListener;
 
-public class limitedUse extends Item{
+public class LimitedUse extends Item{
     private int limitation;
 
-    public limitedUse(String name){
+    public LimitedUse(String name){
         super(name);
         limitation = 0;
     }

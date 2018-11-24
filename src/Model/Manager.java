@@ -1,8 +1,6 @@
 package Model;
 
 import Exceptions.noneExist;
-import SaveLoad.Load;
-import SaveLoad.Save;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,30 +8,30 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class Manager implements Load, Save{
+public class Manager{
     Scanner scanner = new Scanner(System.in);
-    private HashMap<String,individualStorage> availableStorage;
+    private HashMap<String, IndividualStorage> availableStorage;
 
     public Manager(){
         availableStorage = new HashMap<>();
     }
 
-    public HashMap<String, individualStorage> getAvailableStorage(){
+    public HashMap<String, IndividualStorage> getAvailableStorage(){
         return availableStorage;
     }
 
     //EFFECTS: show all storage available
     public void displayStorage(){
-        for (individualStorage s : availableStorage.values()) {
+        for (IndividualStorage s : availableStorage.values()) {
             s.showStock();
         }
     }
 
     //REQUIRES: this is a new storage which is not in the list before
     //MODIFIES: availableStorage
-    //EFFECTS: add a new individualStorage into availableStorage
+    //EFFECTS: add a new IndividualStorage into availableStorage
     public void addNew(String nm){
-        availableStorage.put(nm, new individualStorage(nm));
+        availableStorage.put(nm, new IndividualStorage(nm));
     }
 
     //EFFECTS: verify a new storage is added to the availableStorage or not
@@ -54,7 +52,7 @@ public class Manager implements Load, Save{
         else {throw new noneExist();}
     }
 
-    //MODIFIES: individualStorage
+    //MODIFIES: IndividualStorage
     //EFFECTS: move an item from one individual storage to another
     public void move() throws noneExist {
         System.out.println("Where is the place this item is at now?");
@@ -85,30 +83,14 @@ public class Manager implements Load, Save{
         System.out.println("Please enter the name of this item.");
         String target = scanner.nextLine();
         boolean flag = false;
-        for (individualStorage i: availableStorage.values()){
-            if (i.getStocks().contains(new ordinaryItem(target))){
+        for (IndividualStorage i: availableStorage.values()){
+            if (i.getStocks().contains(new OrdinaryItem(target))){
                 flag = true;
                 System.out.println("This item is in: " + i.getName());
             }
         } if (! flag){
             System.out.println("No such an item.");
         }
-    }
-
-    public List<String> save() throws IOException {
-        PrintWriter writer = new PrintWriter("saveFile.txt","UTF-8");
-        for (individualStorage i: availableStorage.values()){
-            writer.println(i.getName());
-            writer.println(i.getStocks());
-        }
-        writer.close();
-        List<String> savefile = Files.readAllLines(Paths.get("saveFile.txt"));
-        return savefile;
-    }
-
-    public List<String> load() throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get("inputFile.txt"));
-        return lines;
     }
 
 }

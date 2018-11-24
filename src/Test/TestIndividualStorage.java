@@ -1,8 +1,8 @@
 package Test;
 
-import Model.individualStorage;
+import Model.IndividualStorage;
 
-import Model.ordinaryItem;
+import Model.OrdinaryItem;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TestIndividualStorage {
-    private individualStorage box;
+    private IndividualStorage box;
 
     @BeforeEach
     public void runBefore(){
-        box = new individualStorage("Box");
+        box = new IndividualStorage("Box");
     }
 
     //Test items can be added successfully
@@ -24,7 +24,7 @@ public class TestIndividualStorage {
         //assume the box is empty at first
         assertFalse(box.getStocks().size() == 1);
 
-        ordinaryItem newItem = new ordinaryItem("book");
+        OrdinaryItem newItem = new OrdinaryItem("book");
         try {
             box.addItem(newItem);
         } catch (Exceptions.fullStorage fullStorage) {
@@ -50,8 +50,8 @@ public class TestIndividualStorage {
         box.storeItem1("cup");
         box.storeItem1("toys");
 
-        ordinaryItem item5 = new ordinaryItem("crackers");
-        ordinaryItem item6 = new ordinaryItem("chips");
+        OrdinaryItem item5 = new OrdinaryItem("crackers");
+        OrdinaryItem item6 = new OrdinaryItem("chips");
         //Add another item, and this should be added successfully
         try {
             box.addItem(item5);

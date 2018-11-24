@@ -1,17 +1,16 @@
 package Test.ExceptionTests;
 
-import Exceptions.invalidLimit;
 import Model.Manager;
-import Model.individualStorage;
-import Model.ordinaryItem;
+import Model.IndividualStorage;
+import Model.OrdinaryItem;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class fullExceptionTest {
     private Manager ma = new Manager();
-    private individualStorage m = new individualStorage("box");
-    private ordinaryItem i0 = new ordinaryItem("ruler");
+    private IndividualStorage m = new IndividualStorage("box");
+    private OrdinaryItem i0 = new OrdinaryItem("ruler");
 
     @Test
     public void TestFull0(){

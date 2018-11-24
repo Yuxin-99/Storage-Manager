@@ -1,8 +1,8 @@
 package Test.ExceptionTests;
 
 
-import Model.individualStorage;
-import Model.ordinaryItem;
+import Model.IndividualStorage;
+import Model.OrdinaryItem;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 
 public class noneExistTest {
-    private individualStorage m = new individualStorage("box");
-    private ordinaryItem i0 = new ordinaryItem("ruler");
+    private IndividualStorage m = new IndividualStorage("box");
+    private OrdinaryItem i0 = new OrdinaryItem("ruler");
 
     @Test
     public void TestNoneExist0(){

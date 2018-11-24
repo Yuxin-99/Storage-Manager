@@ -7,30 +7,31 @@ import java.util.Observable;
 import java.util.Scanner;
 
 import Exceptions.noneExist;
-import Model.dataNotifier;
-import Model.ordinaryItem;
+import Model.DataNotifier;
+import Model.OrdinaryItem;
 
-public class Main extends Observable{
+import javax.swing.*;
+
+public class Main extends JFrame {
     static Scanner scanner = new Scanner(System.in);
     public static Manager manager;
 
     public static void main(String[] args) throws IOException{
-        dataNotifier d = new dataNotifier();
         manager = new Manager();
         String option = "";
         manager.addNew("bookshelf");
         manager.addNew("plastic case");
         manager.addNew("wardrobe");
 
-        manager.getAvailableStorage().get("bookshelf").getStocks().add(new ordinaryItem("dictionary"));
-        manager.getAvailableStorage().get("bookshelf").getStocks().add(new ordinaryItem("laptop"));
-        manager.getAvailableStorage().get("plastic case").getStocks().add(new ordinaryItem("lipstick"));
-        manager.getAvailableStorage().get("plastic case").getStocks().add(new ordinaryItem("scarf"));
-        manager.getAvailableStorage().get("wardrobe").getStocks().add(new ordinaryItem("coats"));
+        manager.getAvailableStorage().get("bookshelf").getStocks().add(new OrdinaryItem("dictionary"));
+        manager.getAvailableStorage().get("bookshelf").getStocks().add(new OrdinaryItem("laptop"));
+        manager.getAvailableStorage().get("plastic case").getStocks().add(new OrdinaryItem("lipstick"));
+        manager.getAvailableStorage().get("plastic case").getStocks().add(new OrdinaryItem("scarf"));
+        manager.getAvailableStorage().get("wardrobe").getStocks().add(new OrdinaryItem("coats"));
 
         while (true){
             System.out.println("Welcome to your storage manager! What would you like to do?");
-            System.out.println("[1]display the whole storage, [2]add a storage, [3]manage one storage, [4]move an item to a new place, [5]look for an item, [6]save the information, [7]load a file, [8]quit.");
+            System.out.println("[1]display the whole storage, [2]add a storage, [3]manage one storage, [4]move an item to a new place, [5]look for an item, [6]quit.");
             System.out.println("Please choose one number as your option.");
             option = scanner.nextLine();
             if (option.equals("1")) {
@@ -54,10 +55,6 @@ public class Main extends Observable{
             } else if (option.equals("5")){
                 manager.searchItem();
             } else if (option.equals("6")) {
-                manager.save();
-            } else if (option.equals("7")) {
-                manager.load();
-            } else if (option.equals("8")) {
                 break;
             } else {
                 System.out.println("Try again");

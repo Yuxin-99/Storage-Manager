@@ -1,13 +1,8 @@
 package Model;
 
-import javafx.beans.Observable;
-
-import java.util.Objects;
-import java.util.Observer;
-
 public abstract class Item extends Stock{
     protected int amount;
-    protected individualStorage individualStorage;
+    protected IndividualStorage IndividualStorage;
 
     public Item(String name){
         super(name);
@@ -15,7 +10,7 @@ public abstract class Item extends Stock{
     }
 
     public void setIndividualStorage(String snm){
-        individualStorage = new individualStorage(snm);
+        IndividualStorage = new IndividualStorage(snm);
     }
 
     @Override
@@ -31,8 +26,8 @@ public abstract class Item extends Stock{
         return amount;
     }
 
-    public individualStorage getIndividualStorage(){
-        return individualStorage;
+    public IndividualStorage getIndividualStorage(){
+        return IndividualStorage;
     }
 
     public void addAmount(){
@@ -44,7 +39,7 @@ public abstract class Item extends Stock{
     }
 
     public void display(){
-        System.out.println("It's in Storage [" + individualStorage.getName()+ "]");
+        System.out.println("It's in Storage [" + IndividualStorage.getName()+ "]");
         System.out.println("The amount of " + name + " is " + amount + ".");
     }
 

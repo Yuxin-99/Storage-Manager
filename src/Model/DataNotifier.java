@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public class dataNotifier implements Observer{
+public class DataNotifier implements Observer{
     private Integer amount;
     private List<String> newItems;
 
-    public dataNotifier(){
+    public DataNotifier(){
         super();
         newItems = new ArrayList<>();
         amount = 0;

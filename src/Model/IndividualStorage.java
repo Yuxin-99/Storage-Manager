@@ -6,12 +6,12 @@ import Exceptions.invalidLimit;
 import Exceptions.noneExist;
 import Exceptions.fullStorage;
 
-public class individualStorage extends Stock {
+public class IndividualStorage extends Stock {
     Scanner scanner = new Scanner(System.in);
     private ArrayList<Stock> stocks;
-    private dataNotifier d = new dataNotifier();
+    private DataNotifier d = new DataNotifier();
 
-    public individualStorage(String name){
+    public IndividualStorage(String name){
         super(name);
         stocks = new ArrayList<>();
         addObserver(d);
@@ -33,12 +33,12 @@ public class individualStorage extends Stock {
                 i.display();
             } else if (command.equals("3")){
                 String storageName = inputString("Please enter the name of this storage");
-                Stock s = new individualStorage(storageName);
+                Stock s = new IndividualStorage(storageName);
                 stocks.add(s);
             } else if (command.equals("4")) {
                 if (maxCapacity == null || stocks.size() < maxCapacity){
                     String itName = inputString("Please enter the name of the item you would like to store.");
-                    Item newItem = new ordinaryItem(itName);
+                    Item newItem = new OrdinaryItem(itName);
                     if (stocks.contains(newItem)){
                         try {
                             getItem(itName).addAmount();
@@ -97,9 +97,9 @@ public class individualStorage extends Stock {
 
     //REQUIRES: this is an new item which is not in the list
     //MODIFIES: this.stocks
-    //EFFECTS: add an Item with limited lifetime into the stocks of this individualStorage
+    //EFFECTS: add an Item with limited lifetime into the stocks of this IndividualStorage
     public void storeItem0(String nm) {
-        limitedUse newItem = new limitedUse(nm);
+        LimitedUse newItem = new LimitedUse(nm);
         System.out.println("How long is its lifetime? (days)");
         while (true) {
             int lim = Integer.parseInt(scanner.nextLine());
@@ -118,9 +118,9 @@ public class individualStorage extends Stock {
 
     //REQUIRES: this is an new item which is not in the list before
     //MODIFIES: this.stocks
-    //EFFECTS: add an ordinaryItem into the stocks of this individualStorage
+    //EFFECTS: add an OrdinaryItem into the stocks of this IndividualStorage
     public void storeItem1(String nm){
-        Item newItem = new ordinaryItem(nm);
+        Item newItem = new OrdinaryItem(nm);
         stocks.add(newItem);
         newItem.setIndividualStorage(name);
         setChanged();
