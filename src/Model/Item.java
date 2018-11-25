@@ -39,7 +39,7 @@ public abstract class Item extends Stock{
     }
 
     public void display(){
-        System.out.println("It's in Storage [" + IndividualStorage.getName()+ "]");
+        System.out.println("It's in StorageIcon [" + IndividualStorage.getName()+ "]");
         System.out.println("The amount of " + name + " is " + amount + ".");
     }
 

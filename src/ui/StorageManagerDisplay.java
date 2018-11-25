@@ -2,6 +2,8 @@ package ui;
 
 import Model.Manager;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Scanner;
@@ -12,11 +14,22 @@ import Model.OrdinaryItem;
 
 import javax.swing.*;
 
-public class Main extends JFrame {
+public class StorageManagerDisplay extends JFrame {
     static Scanner scanner = new Scanner(System.in);
+    private static int WIDTH = 888;
+    private static int HEIGHT = 666;
     public static Manager manager;
 
-    public static void main(String[] args) throws IOException{
+    public StorageManagerDisplay() {
+        super("StorageIcon Manager");
+
+    }
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public static void main(String[] args){
         manager = new Manager();
         String option = "";
         manager.addNew("bookshelf");
@@ -61,4 +74,5 @@ public class Main extends JFrame {
             }
         }
     }
+
 }

@@ -97,7 +97,7 @@ public class IndividualStorage extends Stock {
 
     //REQUIRES: this is an new item which is not in the list
     //MODIFIES: this.stocks
-    //EFFECTS: add an Item with limited lifetime into the stocks of this IndividualStorage
+    //EFFECTS: add an ItemIcon with limited lifetime into the stocks of this IndividualStorage
     public void storeItem0(String nm) {
         LimitedUse newItem = new LimitedUse(nm);
         System.out.println("How long is its lifetime? (days)");

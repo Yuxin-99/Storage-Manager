@@ -93,4 +93,6 @@ public class Manager{
         }
     }
 
+    //public IndividualStorage current
+
 }
