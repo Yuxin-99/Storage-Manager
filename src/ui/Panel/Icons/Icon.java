@@ -24,7 +24,6 @@ public abstract class Icon {
 
     protected void createButton(JComponent parent, String text){
         Font font = new Font(Font.SANS_SERIF, Font.BOLD, 24);
-        button.setPreferredSize(new Dimension(main.getWidth()/2, main.getHeight()/2));
         button.setFont(font);
 
         addToParent(parent);

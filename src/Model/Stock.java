@@ -27,7 +27,7 @@ public abstract class Stock extends Observable{
         }
     }
 
-    protected abstract void showStock();
+    protected abstract String showStock();
 
     protected void display(){};
 

@@ -88,11 +88,13 @@ public class IndividualStorage extends Stock {
     }
 
     //EFFECTS: show all items in this individual storage
-    public void showStock(){
-        System.out.println("[" + super.name + "]");
+    public String showStock(){
+        String res = "";
+        res = "[" + super.name + "]";
         for (Stock stock: stocks) {
-            stock.showStock();
+            res = res + "\n" + stock.showStock();
         }
+        return res;
     }
 
     //REQUIRES: this is an new item which is not in the list

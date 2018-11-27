@@ -21,10 +21,12 @@ public class Manager{
     }
 
     //EFFECTS: show all storage available
-    public void displayStorage(){
+    public String displayStorage(){
+        String out = "";
         for (IndividualStorage s : availableStorage.values()) {
-            s.showStock();
+            out = out + "\n" + s.showStock();
         }
+        return out;
     }
 
     //REQUIRES: this is a new storage which is not in the list before

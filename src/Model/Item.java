@@ -34,8 +34,8 @@ public abstract class Item extends Stock{
         amount++;
     }
 
-    public void showStock(){
-        System.out.println(super.name);
+    public String showStock(){
+        return super.name;
     }
 
     public void display(){
