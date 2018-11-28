@@ -45,9 +45,9 @@ public class DisplayPanel {
         textArea.setFont(f);
         textArea.setText(output);
         textArea.setEditable(false);
-//        textArea.setBounds(0,0,780,600);
+        textArea.setBounds(0,0,780,600);
         scroll = new JScrollPane(textArea);
-        scroll.setBounds(790,0,10,600);
+//        scroll.setBounds(790,0,10,600);
 
         p1.add(back,BorderLayout.PAGE_END);
         p1.add(textArea,BorderLayout.PAGE_START);
