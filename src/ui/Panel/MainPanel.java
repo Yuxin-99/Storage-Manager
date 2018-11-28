@@ -26,48 +26,28 @@ public class MainPanel implements ActionListener {
         jPanel.setSize(WIDTH,HEIGHT);
         jPanel.setLayout(null);
 
-        b1 = new JButton("Display");
-        b1.setMnemonic(KeyEvent.VK_D);
-        b1.setBounds(260,0,300,150);
-        b1.setHorizontalTextPosition(SwingConstants.CENTER);
-        b1.setVerticalTextPosition(SwingConstants.TOP);
-
-        b2 = new JButton("Add");
-        b2.setMnemonic(KeyEvent.VK_M);
-        b2.setBounds(260,160,300,150);
-        b2.setHorizontalTextPosition(SwingConstants.CENTER);
-        b2.setVerticalTextPosition(SwingConstants.CENTER);
-
-        b3 = new JButton("Further Management");
-        //Use the default text position of CENTER, TRAILING (RIGHT).
-        b3.setMnemonic(KeyEvent.VK_E);
-        b3.setBounds(260,320,300,150);
-        b3.setHorizontalTextPosition(SwingConstants.CENTER);
-        b3.setVerticalTextPosition(SwingConstants.CENTER);
-
-        b4 = new JButton("Search");
-        //Use the default text position of CENTER, TRAILING (RIGHT).
-        b4.setMnemonic(KeyEvent.VK_E);
-        b4.setBounds(260,480,300,150);
-        b4.setHorizontalTextPosition(SwingConstants.CENTER);
-        b4.setVerticalTextPosition(SwingConstants.BOTTOM);
-
-        b1.setToolTipText("Click this button to view the whole storage.");
-        b2.setToolTipText("Click this button to add a new storage.");
-        b3.setToolTipText("Click this button to manage one storage.");
-        b4.setToolTipText("Click this button to look for an item.");
+        b1 = createButton("Display","Click this button to view the whole storage.",260,8,300,150);
+        b2 = createButton("Add","Click this button to add a new storage.",260,168,300,150);
+        b3 = createButton("Further Management","Click this button to manage one storage.",260,328,300,150);
+        b4 = createButton("Search","Click this button to look for an item.",260,488,300,150);
 
         //Add Components to this container, using the default FlowLayout.
         jPanel.add(b1);
         jPanel.add(b2);
         jPanel.add(b3);
         jPanel.add(b4);
+    }
 
-        //Listen for actions on buttons 1 and 3.
-        b1.addActionListener(this);
-        b2.addActionListener(this);
-        b3.addActionListener(this);
-        b4.addActionListener(this);
+    private JButton createButton(String st, String tip, int x, int y, int w, int h){
+        JButton j = new JButton(st);
+        j.setToolTipText(tip);
+        j.setBounds(x,y,w,h);
+        j.setMnemonic(KeyEvent.VK_D);
+        j.setHorizontalTextPosition(SwingConstants.CENTER);
+        j.setVerticalTextPosition(SwingConstants.BOTTOM);
+        j.setFont(new Font(Font.SERIF,Font.PLAIN,28));
+        j.addActionListener(this);
+        return j;
     }
 
     public JPanel getJPanel() {

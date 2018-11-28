@@ -1,7 +1,11 @@
 package ui.Panel;
 
+import Exceptions.fullStorage;
+import Exceptions.invalidLimit;
+import Exceptions.noneExist;
 import Model.IndividualStorage;
 import Model.Manager;
+import Model.OrdinaryItem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,96 +20,119 @@ public class IndividualPanel{
     private IndividualStorage i;
 
     private JFrame jFrame;
-    private JPanel p1;
-    private JPanel p2;
-    private JButton back;
-    private JButton add;
-    private JButton delete;
-    private JButton show;
-    private JButton capacity;
+    private JPanel p0,p1,p2,p3;
+    private JButton back, add, delete, show, capacity;
     private JTextField entry;
     private JTextArea textArea;
+    private JScrollPane scroll;
     private JLabel l;
 
     private Font f1,f2;
 
     public IndividualPanel(JFrame j, Manager manager, IndividualStorage individualStorage){
         jFrame = j;
+        p0 = new JPanel();
         p1 = new JPanel();
         p2 = new JPanel();
+        p3 = new JPanel();
         l = new JLabel();
         m = manager;
         i = individualStorage;
         textArea = new JTextArea();
-        entry = new JTextField();
-        f1 = new Font(Font.MONOSPACED, Font.BOLD, 28);
+        entry = new JTextField(36);
+        f1 = new Font(Font.SERIF, Font.BOLD, 28);
         f2 = new Font(Font.DIALOG,Font.PLAIN,21);
 
+        p0.setBackground(new Color(255,204,204));
+        p0.setSize(WIDTH,HEIGHT);
+        p0.setLayout(new BoxLayout(p0, BoxLayout.Y_AXIS));
         p1.setBackground(new Color(255,204,204));
-        p1.setSize(WIDTH,HEIGHT);
-        p2.setBackground(Color.WHITE);
-        p2.setSize(WIDTH,HEIGHT/2);
+        p1.setSize(WIDTH,HEIGHT/2);
+        //p1.setLayout(null);
+        p2.setSize(WIDTH,100);
+        p2.setBackground(new Color(255,204,204));
+        p3.setSize(WIDTH,210);
+        p3.setBackground(new Color(250,230,227));
 
-        add = createButton("Add","Click to add this",20,450,45,35);
-        delete = createButton("Delete","Click to discard a stock",20,500,45,35);
-        show = createButton("Show","Click to view this storage",20,550,45,35);
-        capacity = createButton("Capacity","Click to set a max capacity for this storage",20,600,45,35);
-        back = createButton("Back", "Back to the main panel",755,640,35,20);
+        add = createButton("Add","Click to add this",20,0,45,35);
+        delete = createButton("Delete","Click to discard a stock",20,50,45,35);
+        show = createButton("Show","Click to view this storage",20,100,45,35);
+        capacity = createButton("Capacity","Click to set a max capacity for this storage",20,150,45,35);
+        back = createButton("Back", "Back to the main panel",755,190,35,20);
 
-
+        textArea = new JTextArea();
         textArea.setBackground(new Color(255,204,204));
         textArea.setFont(f1);
-        textArea.setText("Your whole storage");
+        textArea.setText(i.getName());
+        textArea.setEditable(false);
+        //textArea.setBounds(0,0,780,HEIGHT/2);
+        scroll = new JScrollPane(textArea);
+        scroll.setBounds(790,0,10,HEIGHT/2);
 
-        l.setText("Enter here");
+        l.setText("Enter here before you continue");
         entry.setFont(f2);
-        entry.add(l);
-        entry.setColumns(10);
 
-        p1.add(p2);
-        p1.add(back);
-        p2.add(textArea);
+        p1.add(textArea);
+        //p1.add(scroll);
+        p2.add(l);
+        p2.add(entry);
+        p3.add(add);
+        p3.add(delete);
+        p3.add(show);
+        p3.add(capacity);
+        p3.add(back);
+        p0.add(p1);
+        p0.add(p2);
+        p0.add(p3);
 
         add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jFrame.remove(p1);
-                jFrame.setContentPane(new MainPanel(jFrame, m).getJPanel());
-                jFrame.setVisible(true);
+                String name = entry.getText();
+                try {
+                    i.addItem(new OrdinaryItem(name));
+                } catch (Exceptions.fullStorage fullStorage) {
+                    fullStorage.printStackTrace();
+                }
             }
         });
 
         delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jFrame.remove(p1);
-                jFrame.setContentPane(new MainPanel(jFrame, m).getJPanel());
-                jFrame.setVisible(true);
+                String name = entry.getText();
+                try {
+                    i.moveItem(name);
+                } catch (Exceptions.noneExist noneExist) {
+                    noneExist.printStackTrace();
+                }
             }
         });
 
         show.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jFrame.remove(p1);
-                jFrame.setContentPane(new MainPanel(jFrame, m).getJPanel());
-                jFrame.setVisible(true);
+                String res = i.showStock();
+                textArea.setText(res);
             }
         });
 
         capacity.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jFrame.remove(p1);
-                jFrame.setContentPane(new MainPanel(jFrame, m).getJPanel());
-                jFrame.setVisible(true);
+                Integer max = Integer.valueOf(entry.getText());
+                try {
+                    i.setMaxCapacity(max);
+                } catch (Exceptions.invalidLimit invalidLimit) {
+                    invalidLimit.printStackTrace();
+                }
             }
         });
 
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jFrame.remove(p1);
+                jFrame.remove(p0);
                 jFrame.setContentPane(new MainPanel(jFrame, m).getJPanel());
                 jFrame.setVisible(true);
             }
@@ -113,7 +140,7 @@ public class IndividualPanel{
     }
 
     public JPanel getJPanel() {
-        return p1;
+        return p0;
     }
 
     private JButton createButton(String st, String tip, int x, int y, int w, int h){
@@ -123,6 +150,8 @@ public class IndividualPanel{
         j.setBounds(x,y,w,h);
         j.setHorizontalTextPosition(SwingConstants.CENTER);
         j.setVerticalTextPosition(SwingConstants.CENTER);
+        j.setForeground(new Color(147,208,255));
+        j.setFont(new Font(Font.DIALOG,Font.BOLD,21));
         return j;
     }
 }

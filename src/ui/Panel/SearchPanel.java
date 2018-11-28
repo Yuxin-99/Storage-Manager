@@ -8,46 +8,91 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class SearchPanel extends JPanel{
+public class SearchPanel{
     private static int WIDTH = 800;
     private static int HEIGHT = 660;
     private Dimension d = new Dimension(360,150);
     private Manager m;
 
     private JFrame jFrame;
+    private JPanel p0;
     private JPanel p1;
+    private JPanel p2;
+    private JPanel p3;
+    private JButton search;
     private JButton back;
     private JTextArea textArea;
-    private Font f;
+    private JTextField entry;
+    private Font f1,f2;
+    private JLabel l;
 
     public SearchPanel(JFrame j, Manager m){
         jFrame = j;
+        p0 = new JPanel();
         p1 = new JPanel();
+        p2 = new JPanel();
+        p3 = new JPanel();
         textArea = new JTextArea();
-        f = new Font(Font.SANS_SERIF, Font.ITALIC, 28);
+        entry = new JTextField(21);
+        l = new JLabel("Enter the name of the item:");
+        f1 = new Font(Font.SERIF, Font.BOLD, 28);
+        f2 = new Font(Font.DIALOG,Font.PLAIN,21);
 
-        p1.setLayout(new BorderLayout());
-        p1.setBackground(new Color(255,204,204));
-        p1.setSize(WIDTH,HEIGHT);
+        p0.setLayout(new BoxLayout(p0,BoxLayout.Y_AXIS));
+        p0.setBackground(new Color(255,204,204));
+        p0.setSize(WIDTH,HEIGHT);
+        p1.setBackground(new Color(30,192,255));
+        p1.setSize(WIDTH,100);
+        p2.setSize(WIDTH,88);
+//        p2.setLayout(new BoxLayout(p2,BoxLayout.X_AXIS));
+        p2.setBackground(new Color(165,223,249));
+        p3.setBackground(new Color(214,236,250));
+        p3.setSize(WIDTH,280);
 
+        search = new JButton("Search");
+        search.setToolTipText("Click to see the position of this item");
+        search.setMnemonic(KeyEvent.VK_D);
+        search.setPreferredSize(d);
+        search.setHorizontalTextPosition(SwingConstants.CENTER);
+        search.setVerticalTextPosition(SwingConstants.CENTER);
+        search.setFont(new Font(Font.DIALOG,Font.BOLD,21));
+        search.setForeground(new Color(255,127,143));
         back = new JButton("Back");
         back.setToolTipText("Back to the main panel");
         back.setMnemonic(KeyEvent.VK_D);
         back.setPreferredSize(d);
         back.setHorizontalTextPosition(SwingConstants.CENTER);
         back.setVerticalTextPosition(SwingConstants.CENTER);
+        back.setFont(new Font(Font.DIALOG,Font.BOLD,21));
+        back.setForeground(new Color(255,127,143));
 
-        textArea.setBackground(new Color(255,204,204));
-        textArea.setFont(f);
-        textArea.setText("Your whole storage");
+        textArea.setBackground(new Color(30,192,255));
+        textArea.setFont(f1);
+        textArea.setEditable(false);
+        entry.setFont(f2);
 
+        p1.add(textArea);
+        p2.add(l);
+        p2.add(entry);
+        p3.add(search);
+        p3.add(back);
+        p0.add(p1);
+        p0.add(p2);
+        p0.add(p3);
 
-        p1.add(back,BorderLayout.PAGE_END);
-        p1.add(textArea,BorderLayout.PAGE_START);
+        search.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String item = entry.getText();
+                String pos = m.searchItem(item);
+                String print = "This item is in: " + pos;
+                textArea.setText(print);
+            }
+        });
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jFrame.remove(p1);
+                jFrame.remove(p0);
                 jFrame.setContentPane(new MainPanel(jFrame, m).getJPanel());
                 jFrame.setVisible(true);
             }
@@ -55,6 +100,6 @@ public class SearchPanel extends JPanel{
     }
 
     public JPanel getJPanel() {
-        return p1;
+        return p0;
     }
 }

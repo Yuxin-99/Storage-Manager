@@ -81,18 +81,21 @@ public class Manager{
         }
     }
 
-    public void searchItem(){
-        System.out.println("Please enter the name of this item.");
-        String target = scanner.nextLine();
+    public String searchItem(String target){
+//        System.out.println("Please enter the name of this item.");
+//        String target = scanner.nextLine();
+        String pos = "";
         boolean flag = false;
         for (IndividualStorage i: availableStorage.values()){
             if (i.getStocks().contains(new OrdinaryItem(target))){
                 flag = true;
-                System.out.println("This item is in: " + i.getName());
+                pos = i.getName();
+                //System.out.println("This item is in: " + i.getName());
             }
         } if (! flag){
-            System.out.println("No such an item.");
+            pos = "No such an item.";
         }
+        return pos;
     }
 
     //public IndividualStorage current
