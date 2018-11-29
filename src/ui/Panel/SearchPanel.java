@@ -43,12 +43,8 @@ public class SearchPanel{
         p0.setBackground(new Color(255,204,204));
         p0.setSize(WIDTH,HEIGHT);
         p1.setBackground(new Color(30,192,255));
-        p1.setSize(WIDTH,100);
-        p2.setSize(WIDTH,88);
-//        p2.setLayout(new BoxLayout(p2,BoxLayout.X_AXIS));
         p2.setBackground(new Color(165,223,249));
         p3.setBackground(new Color(214,236,250));
-        p3.setSize(WIDTH,280);
 
         search = new JButton("Search");
         search.setToolTipText("Click to see the position of this item");

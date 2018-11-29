@@ -20,7 +20,7 @@ public class IndividualPanel{
     private IndividualStorage i;
 
     private JFrame jFrame;
-    private JPanel p0,p1,p2,p3;
+    private JPanel p0,p2,p3;
     private JButton back, add, delete, show, capacity;
     private JTextField entry;
     private JTextArea textArea;
@@ -32,7 +32,6 @@ public class IndividualPanel{
     public IndividualPanel(JFrame j, Manager manager, IndividualStorage individualStorage){
         jFrame = j;
         p0 = new JPanel();
-        p1 = new JPanel();
         p2 = new JPanel();
         p3 = new JPanel();
         l = new JLabel();
@@ -46,11 +45,7 @@ public class IndividualPanel{
         p0.setBackground(new Color(255,204,204));
         p0.setSize(WIDTH,HEIGHT);
         p0.setLayout(new BoxLayout(p0, BoxLayout.Y_AXIS));
-        p1.setBackground(new Color(255,204,204));
-        p1.setSize(WIDTH,HEIGHT/2);
-        p2.setSize(WIDTH,100);
         p2.setBackground(new Color(255,204,204));
-        p3.setSize(WIDTH,210);
         p3.setBackground(new Color(250,230,227));
 
         add = createButton("Add","Click to add this",20,0,45,35);
@@ -66,13 +61,10 @@ public class IndividualPanel{
         textArea.setEditable(false);
         textArea.setRows(6);
         scroll = new JScrollPane(textArea);
-//        scroll.setBounds(790,0,10,HEIGHT/2);
 
         l.setText("Enter here before you continue");
         entry.setFont(f2);
 
-//        p1.add(textArea);
-//        p1.add(scroll);
         p2.add(l);
         p2.add(entry);
         p3.add(add);

@@ -69,10 +69,10 @@ public class FurtherManagementPanel{
         JButton j = new JButton(st);
         j.setToolTipText(tip);
         j.setMnemonic(KeyEvent.VK_D);
-        j.setHorizontalTextPosition(SwingConstants.CENTER);
+        j.setHorizontalTextPosition(SwingConstants.LEADING);
         j.setVerticalTextPosition(SwingConstants.CENTER);
         j.setFont(new Font(Font.DIALOG,Font.PLAIN,28));
-        if (st.equals("back")){j.setIcon(icon);}
+        if (st.equals("Back")){j.setIcon(icon);}
         return j;
     }
 
