@@ -45,12 +45,13 @@ public class DisplayPanel {
         textArea.setFont(f);
         textArea.setText(output);
         textArea.setEditable(false);
+        textArea.setRows(18);
 //        textArea.setBounds(0,0,780,600);
         scroll = new JScrollPane(textArea);
 //        scroll.setBounds(790,0,10,600);
 
         p1.add(back,BorderLayout.PAGE_END);
-        p1.add(textArea,BorderLayout.PAGE_START);
+        p1.add(scroll,BorderLayout.PAGE_START);
 //        p2.add(textArea);
 //        p2.add(scroll);
         back.addActionListener(new ActionListener() {

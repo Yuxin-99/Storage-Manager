@@ -48,7 +48,6 @@ public class IndividualPanel{
         p0.setLayout(new BoxLayout(p0, BoxLayout.Y_AXIS));
         p1.setBackground(new Color(255,204,204));
         p1.setSize(WIDTH,HEIGHT/2);
-        //p1.setLayout(null);
         p2.setSize(WIDTH,100);
         p2.setBackground(new Color(255,204,204));
         p3.setSize(WIDTH,210);
@@ -65,15 +64,15 @@ public class IndividualPanel{
         textArea.setFont(f1);
         textArea.setText(i.getName());
         textArea.setEditable(false);
-        //textArea.setBounds(0,0,780,HEIGHT/2);
+        textArea.setRows(6);
         scroll = new JScrollPane(textArea);
-        scroll.setBounds(790,0,10,HEIGHT/2);
+//        scroll.setBounds(790,0,10,HEIGHT/2);
 
         l.setText("Enter here before you continue");
         entry.setFont(f2);
 
-        p1.add(textArea);
-        //p1.add(scroll);
+//        p1.add(textArea);
+//        p1.add(scroll);
         p2.add(l);
         p2.add(entry);
         p3.add(add);
@@ -81,7 +80,7 @@ public class IndividualPanel{
         p3.add(show);
         p3.add(capacity);
         p3.add(back);
-        p0.add(p1);
+        p0.add(scroll);
         p0.add(p2);
         p0.add(p3);
 
@@ -144,6 +143,7 @@ public class IndividualPanel{
     }
 
     private JButton createButton(String st, String tip, int x, int y, int w, int h){
+        ImageIcon icon = createImageIcon("Images/continue.gif");
         JButton j = new JButton(st);
         j.setMnemonic(KeyEvent.VK_D);
         j.setToolTipText(tip);
@@ -152,6 +152,18 @@ public class IndividualPanel{
         j.setVerticalTextPosition(SwingConstants.CENTER);
         j.setForeground(new Color(147,208,255));
         j.setFont(new Font(Font.DIALOG,Font.BOLD,21));
+        if (st.equals("Back")){j.setIcon(icon);
+        j.setHorizontalTextPosition(SwingConstants.LEADING);}
         return j;
+    }
+
+    protected static ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = MainPanel.class.getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
     }
 }

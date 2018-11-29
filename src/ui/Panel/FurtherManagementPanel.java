@@ -65,16 +65,28 @@ public class FurtherManagementPanel{
     }
 
     private JButton createButton(String st, String tip){
+        ImageIcon icon = createImageIcon("Images/continue.gif");
         JButton j = new JButton(st);
         j.setToolTipText(tip);
         j.setMnemonic(KeyEvent.VK_D);
         j.setHorizontalTextPosition(SwingConstants.CENTER);
-        j.setVerticalTextPosition(SwingConstants.BOTTOM);
+        j.setVerticalTextPosition(SwingConstants.CENTER);
         j.setFont(new Font(Font.DIALOG,Font.PLAIN,28));
+        if (st.equals("back")){j.setIcon(icon);}
         return j;
     }
 
     public JPanel getJPanel() {
         return p1;
+    }
+
+    protected static ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = MainPanel.class.getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
     }
 }

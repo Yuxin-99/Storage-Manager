@@ -32,6 +32,7 @@ public class SearchPanel{
         p1 = new JPanel();
         p2 = new JPanel();
         p3 = new JPanel();
+        ImageIcon icon = createImageIcon("Images/continue.gif");
         textArea = new JTextArea();
         entry = new JTextField(21);
         l = new JLabel("Enter the name of the item:");
@@ -57,11 +58,11 @@ public class SearchPanel{
         search.setVerticalTextPosition(SwingConstants.CENTER);
         search.setFont(new Font(Font.DIALOG,Font.BOLD,21));
         search.setForeground(new Color(255,127,143));
-        back = new JButton("Back");
+        back = new JButton("Back",icon);
         back.setToolTipText("Back to the main panel");
         back.setMnemonic(KeyEvent.VK_D);
         back.setPreferredSize(d);
-        back.setHorizontalTextPosition(SwingConstants.CENTER);
+        back.setHorizontalTextPosition(SwingConstants.LEADING);
         back.setVerticalTextPosition(SwingConstants.CENTER);
         back.setFont(new Font(Font.DIALOG,Font.BOLD,21));
         back.setForeground(new Color(255,127,143));
@@ -101,5 +102,15 @@ public class SearchPanel{
 
     public JPanel getJPanel() {
         return p0;
+    }
+
+    protected static ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = MainPanel.class.getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
     }
 }

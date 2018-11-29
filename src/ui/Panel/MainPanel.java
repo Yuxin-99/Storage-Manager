@@ -39,12 +39,13 @@ public class MainPanel implements ActionListener {
     }
 
     private JButton createButton(String st, String tip, int x, int y, int w, int h){
-        JButton j = new JButton(st);
+        ImageIcon icon = createImageIcon("Images/continue.gif");
+        JButton j = new JButton(st,icon);
         j.setToolTipText(tip);
         j.setBounds(x,y,w,h);
         j.setMnemonic(KeyEvent.VK_D);
-        j.setHorizontalTextPosition(SwingConstants.CENTER);
-        j.setVerticalTextPosition(SwingConstants.BOTTOM);
+        j.setHorizontalTextPosition(SwingConstants.LEADING);
+        j.setVerticalTextPosition(SwingConstants.CENTER);
         j.setFont(new Font(Font.SERIF,Font.PLAIN,28));
         j.addActionListener(this);
         return j;
@@ -52,6 +53,16 @@ public class MainPanel implements ActionListener {
 
     public JPanel getJPanel() {
         return jPanel;
+    }
+
+    protected static ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = MainPanel.class.getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
     }
 
     @Override
