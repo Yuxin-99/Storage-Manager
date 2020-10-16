@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Observable;
 
 public abstract class Stock extends Observable{
-    protected String name;
+    protected final String name;
     protected Integer maxCapacity;
 
     public Stock(String name){

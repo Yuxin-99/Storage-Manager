@@ -26,6 +26,7 @@ public class MainPanel implements ActionListener {
         jPanel.setSize(WIDTH,HEIGHT);
         jPanel.setLayout(null);
 
+        JButton b6 = new JButton("add");
         b1 = createButton("Display","Click this button to view the whole storage.",260,8,300,150);
         b2 = createButton("Add","Click this button to add a new storage.",260,168,300,150);
         b3 = createButton("Further Management","Click this button to manage one storage.",260,328,300,150);

@@ -1,15 +1,10 @@
 package ui;
 
 import Model.Manager;
-
-import java.util.Scanner;
-
-import Exceptions.noneExist;
 import Model.OrdinaryItem;
 import ui.Panel.MainFrame;
-import ui.Panel.MainPanel;
 
-import javax.swing.*;
+import java.util.Scanner;
 
 public class StorageManagerDisplay {
     static Scanner scanner = new Scanner(System.in);
