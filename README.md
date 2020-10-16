@@ -1,6 +1,7 @@
 # Storage-Manager
 
 This is an App where you can manage your self-storage.
+
 Users can: 
     (1) add/remove a place for storage (eg., a bookshelf or a wardrobe).
     (2) set the capacity for some storage space (eg., a bookshelf can only store up to 10 items). When exceeding the capacity, there will be notifications.
