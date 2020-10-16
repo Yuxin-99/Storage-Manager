@@ -30,38 +30,6 @@ public class StorageManagerDisplay {
         manager.getAvailableStorage().get("wardrobe").getStocks().add(new OrdinaryItem("coats"));
 
         c = new MainFrame(manager);
-//
-//        while (true){
-//            System.out.println("Welcome to your storage manager! What would you like to do?");
-//            System.out.println("[1]display the whole storage, [2]add a storage, [3]manage one storage, [4]move an item to a new place, [5]look for an item, [6]quit.");
-//            System.out.println("Please choose one number as your option.");
-//            option = scanner.nextLine();
-//            if (option.equals("1")) {
-//                manager.displayStorage();
-//            } else if (option.equals("2")) {
-//                System.out.println("Please enter the name of the new storage.");
-//                String stName = scanner.nextLine();
-//                manager.addNew(stName);
-//            } else if (option.equals("3")) {
-//                try {
-//                    manager.manageOne();
-//                } catch (noneExist e) {
-//                    System.out.println("Sorry. The storage you entered doesn't exist.");
-//                }
-//            } else if (option.equals("4")) {
-//                try {
-//                    manager.move();
-//                } catch (noneExist e) {
-//                    System.out.println("Sorry. The storage (item) you entered doesn't exist.");
-//                }
-//            } else if (option.equals("5")){
-//                manager.searchItem();
-//            } else if (option.equals("6")) {
-//                break;
-//            } else {
-//                System.out.println("Try again");
-//            }
-//        }
     }
 
     public static void main(String[] args){
